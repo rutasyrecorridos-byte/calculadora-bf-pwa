@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora de rendimiento para técnicas de extinción de incendios forestales">
+    <meta name="theme-color" content="#ff6b35">
+    
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkNhbGN1bGFkb3JhIGRlIFJlbmRpbWllbnRvIGRlIEV4dGluY2nDs24iLAogICJzaG9ydF9uYW1lIjogIkNhbGMgRXh0aW5jacOzbiIsCiAgImRlc2NyaXB0aW9uIjogIkNhbGN1bGFkb3JhIGRlIHJlbmRpbWllbnRvIHBhcmEgdMOpY25pY2FzIGRlIGV4dGluY2nDs24gZGUgaW5jZW5kaW9zIGZvcmVzdGFsZXMiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZjhmMCIsCiAgInRoZW1lX2NvbG9yIjogIiNmZjZiMzUiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScwLjllbScgZm9udC1zaXplPSc5MCc+8J+UpTwvdGV4dD48L3N2Zz4iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>">
+    <title>Calculadora de Rendimiento de Extinción</title>
+    
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b35 0%, #c9485b 100%);
+            min-height: 100vh; /* Cambiado a vh para ocupar toda la pantalla */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff8f0;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 90%;
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c1810;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .btn-calculate {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b35 0%, #c9485b 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+
+        .resultado {
+            margin-top: 32px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid #ff6b35;
+        }
+
+        .resultado h3 {
+            margin: 0 0 16px 0;
+            color: #2c1810;
+            font-size: 20px;
+        }
+
+        .resultado p {
+            margin: 8px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+        .alert-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 5px solid;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffa500;
+            color: #856404;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #0dcaf0;
+            color: #055160;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff6b35;
+            margin: 8px 0;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* PWA Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c1810;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none; /* Se muestra con JS */
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .install-prompt button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            .content {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="main-title">🔥 Calculadora de Rendimiento</h1>
+            <p id="subtitle">Técnicas de Extinción de Incendios Forestales</p>
+        </div>
+        <div class="content">
+            <div class="form-group">
+                <label for="tecnica" id="technique-label">Selecciona la técnica:</label>
+                <select id="tecnica" onchange="calcularRendimiento()"></select>
+            </div>
+            <div class="form-group">
+                <label for="numBF" id="bf-label">Número de Bomberos Forestales (BF):</label>
+                <input type="number" id="numBF" min="1" step="1" placeholder="Ej: 10" value="2" oninput="calcularRendimiento()">
+            </div>
+            <div id="resultado"></div>
+        </div>
+    </div>
+    
+    <div class="install-prompt" id="installPrompt">
+        <span>📱 Instalar esta calculadora como aplicación</span>
+        <button onclick="installApp()">Instalar</button>
+        <button onclick="dismissInstall()" style="background: transparent; border: 1px solid white;">Cerrar</button>
+    </div>
+    
+    <script>
+        // --- 1. Base de Datos ---
+        const datosRendimiento = {
+            "Ataque Directo Línea de agua": 50,
+            "Ataque Directo mochila/batefuegos + remate (modelo 1 y 2)": 40,
+            "Herramienta Manual (modelo 8 y 9)": 35,
+            "Herramienta Manual (modelo 3, 5 y 6)": 30,
+            "Herramienta Manual (modelo 7)": 25,
+            "Herramienta Manual (modelo 10, 11, 12 y 13)": 20,
+            "Herramienta Manual (modelo 4)": 15,
+            "Ataque Directo modelo 1 y 2 + Medio aereo": 160,
+            "Ataque Directo modelo 8 y 9 + Medio aereo": 60,
+            "Ataque Directo Herramienta Manual (modelo 3, 5 y 6 + Medio aereo)": 50,
+            "Ataque Directo Herramienta Manual (modelo 7) + Medio aereo": 40,
+            "Ataque Directo Herramienta Manual (modelo 10,11...) + Medio aereo": 30,
+            "Ataque Directo Herramienta Manual (modelo 4) + Medio aereo": 25,
+            "Quema definicion modelo 1 y 2": 120,
+            "Quema definicion de perimetro modelo 8 y 9": 70,
+            "Quema definicion de perimetro (modelo 3, 5 y 6) + mochila/autobomba con acceso": 40,
+            "Quema definicion de perimetro (modelo 7) + mochila/autobomba con acceso": 35,
+            "Quema definicion de perimetro (modelo 10, 11, ...) + mochila/autobomba con acceso": 30,
+            "Quema definicion de perimetro (modelo 4) + mochila/autobomba con acceso": 25,
+            "Ataque Móvil una autobomba (modelo 1 y 2)": 500,
+            "Maquinaria Pesada": 500,
+            "Quema de ensanche CON LINEA DE CONTROL": 500,
+            "Quema definicion autobomba SIN ACCESO (Nota)": 0,
+            "Quema de ensanche SIN LINEA DE CONTROL (Nota)": 0
+        };
+
+        // --- 2. Lógica PWA (Instalación) ---
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Solo mostrar si el navegador soporta la instalación
+            if (window.matchMedia('(display-mode: standalone)').matches === false) {
+                 document.getElementById('installPrompt').style.display = 'flex';
+            }
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                    document.getElementById('installPrompt').style.display = 'none';
+                });
+            }
+        }
+
+        function dismissInstall() {
+            document.getElementById('installPrompt').style.display = 'none';
+        }
+
+        // --- 3. Service Worker (Offline Cache) ---
+        if ('serviceWorker' in navigator) {
+            // Este Service Worker simple permite que la aplicación funcione offline
+            const swCode = `
+                const CACHE_NAME = 'calc-extincion-v1';
+                const urlsToCache = [
+                    '/', // Se asume que este archivo es la raíz
+                    'index.html'
+                ];
+
+                self.addEventListener('install', (e) => {
+                    e.waitUntil(
+                        caches.open(CACHE_NAME).then((cache) => {
+                            return cache.addAll(urlsToCache);
+                        })
+                    );
+                    self.skipWaiting();
+                });
+
+                self.addEventListener('activate', (e) => {
+                    e.waitUntil(clients.claim());
+                });
+
+                self.addEventListener('fetch', (e) => {
+                    e.respondWith(
+                        caches.match(e.request).then((response) => {
+                            return response || fetch(e.request);
+                        })
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl).then(() => {
+                // Registro exitoso
+            }).catch(() => {
+                // Error en el registro
+            });
+        }
+
+        // --- 4. Lógica de Cálculo ---
+
+        function clasificarRendimiento(rendimiento) {
+            if (rendimiento >= 80) return { nombre: "🔥 ALTO", color: "#cc0000" };
+            if (rendimiento >= 40) return { nombre: "🟡 MEDIO", color: "#ffa500" };
+            return { nombre: "⬇️ BAJO", color: "#007bff" };
+        }
+
+        function cargarTecnicas() {
+            const select = document.getElementById('tecnica');
+            // Añadir la opción por defecto primero
+            const defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.textContent = "-- Elige una técnica --";
+            select.appendChild(defaultOption);
+
+            for (const tecnica in datosRendimiento) {
+                const option = document.createElement('option');
+                option.value = tecnica;
+                option.textContent = tecnica.replace(' (Nota)', '');
+                select.appendChild(option);
+            }
+        }
+
+        function calcularRendimiento() {
+            const tecnica = document.getElementById('tecnica').value;
+            const numBF = parseFloat(document.getElementById('numBF').value);
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (!tecnica || numBF <= 0 || isNaN(numBF)) {
+                resultadoDiv.innerHTML = '<div class="alert-box alert-warning"><p>Por favor, selecciona una técnica y un número de BF válido.</p></div>';
+                return;
+            }
+
+            const rend_base = datosRendimiento[tecnica];
+            let htmlResultado = '';
+
+            // CASOS ESPECIALES (Rendimiento Fijo por Equipo)
+            if (tecnica.includes("autobomba") && !tecnica.includes("acceso") || tecnica.includes("Maquinaria Pesada") || tecnica.includes("Quema de ensanche CON LINEA DE CONTROL")) {
+                htmlResultado = `
+                    <h3>Rendimiento por Unidad</h3>
+                    <p>Esta técnica no se escala linealmente por Bombero Forestal (BF).</p>
+                    <div class="metric-card" style="border-left: 5px solid #ffa500;">
+                        <div class="metric-label">Rendimiento Fijo por Unidad</div>
+                        <div class="metric-value">${rend_base.toFixed(0)} m/h</div>
+                    </div>
+                    <div class="alert-box alert-warning">
+                        <p style="font-size: 0.9em;"><strong>Nota:</strong> El rendimiento de los ${numBF} BF se limita a la capacidad de la unidad. El tiempo de trabajo es de aproximadamente 2 horas (ver tabla original).</p>
+                    </div>
+                `;
+            
+            // CASOS COMPLEJOS (Cálculo Manual Requerido)
+            } else if (rend_base === 0) {
+                htmlResultado = `
+                    <h3>⚠️ Cálculo Manual Requerido</h3>
+                    <div class="alert-box alert-danger">
+                        <p>Esta técnica requiere la <strong>suma de rendimientos</strong> (ej: rendimiento de la quema + rendimiento del tendido de manguera o línea de control).</p>
+                        <p><strong>Consulta la documentación oficial para este cálculo complejo.</strong></p>
+                    </div>
+                `;
+            
+            // CÁLCULO ESTÁNDAR (Rendimiento por BF)
+            } else {
+                const rendimientoTotal = rend_base * numBF;
+                const clasificacion = clasificarRendimiento(rend_base);
+
+                htmlResultado = `
+                    <h3>Resultados del Cálculo</h3>
+                    
+                    <div class="metric-card">
+                        <div class="metric-label">Rendimiento Base por BF</div>
+                        <div class="metric-value" style="color: ${clasificacion.color};">${rend_base.toFixed(0)} m/h</div>
+                        <span class="badge" style="background-color: ${clasificacion.color}; color: white;">Clasificación: ${clasificacion.nombre}</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">Rendimiento Total Estimado para ${numBF} BF</div>
+                        <div class="metric-value" style="color: #ff6b35;">${rendimientoTotal.toFixed(0)} m/h</div>
+                    </div>
+
+                    <div class="alert-box alert-info">
+                        <p>Con ${numBF} BF, la línea de extinción puede avanzar aproximadamente <strong>${rendimientoTotal.toFixed(0)} metros de perímetro por hora</strong>.</p>
+                    </div>
+                `;
+            }
+
+            resultadoDiv.innerHTML = '<div class="resultado">' + htmlResultado + '</div>';
+        }
+
+        // Inicializar la aplicación al cargar
+        cargarTecnicas();
+        calcularRendimiento(); // Carga el cálculo inicial con los valores por defecto
+    </script>
+</body>
+</html>
